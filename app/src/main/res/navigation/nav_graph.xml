@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/authorizationFragment">
+
+    <fragment
+        android:id="@+id/authorizationFragment"
+        android:name="com.example.analogunsplash.presentation.auth.start.StartAuthorizationFragment"
+        android:label="fragment_authorization"
+        tools:layout="@layout/fragment_start_authorization">
+        <deepLink app:uri="https://unsplash.com/oauth/authorize/native?code={code}" />
+        <argument
+            android:name="code"
+            android:defaultValue=""
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/blankFragment"
+        android:name="com.example.analogunsplash.presentation.auth.finish.FinishAuthorizationFragment"
+        android:label="fragment_blank"
+        tools:layout="@layout/fragment_finish_authorization">
+
+        <argument
+            android:name="code"
+            android:defaultValue="123"
+            app:argType="string" />
+
+    </fragment>
+
+</navigation>

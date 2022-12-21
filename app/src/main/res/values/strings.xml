@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">analog Unsplash</string>
+    <string name="error_text"> "Ошибка загрузки!\n
+        Приносим извинения за предоставленные неудобства"</string>
+</resources>
