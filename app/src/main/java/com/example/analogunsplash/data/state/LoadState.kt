@@ -1,5 +1,5 @@
 package com.example.analogunsplash.data.state
 
-enum class LoadState {
-    LOADING,ERROR,SUCCESS
+enum class LoadState (var message:String="") {
+    START,LOADING,ERROR,SUCCESS
 }

@@ -47,6 +47,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
                     LoadState.LOADING -> progressBar.isVisible = true
                     LoadState.SUCCESS -> progressBar.isVisible = false
                     LoadState.ERROR -> errorView.text = getString(R.string.error_text)
+                    else->{}
                 }
             }
         }

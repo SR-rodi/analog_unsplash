@@ -4,5 +4,7 @@ data class PhotoItem(
     val alt_description: String,
     val blur_hash: String,
     val urls: Urls,
-    val width: Int
+    val width: Int,
+    var like:Boolean,
+    val height: Int,
 )
