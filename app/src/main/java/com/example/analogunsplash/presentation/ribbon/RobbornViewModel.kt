@@ -37,9 +37,7 @@ class RibbonViewModel(
             localChange.isFavorite[item.photoId] = newFlag
             localeChangeFlow.emit(OnChange(localChange))
 
-
         }
-        // combine(items,localeChangeFlow, this@RibbonViewModel::merge).cachedIn(viewModelScope)
     }
 
 }
@@ -56,7 +54,6 @@ class RibbonViewModel(
             else item
             newItem
         }
-
 }
 
 
