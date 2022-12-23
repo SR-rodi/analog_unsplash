@@ -21,13 +21,13 @@
     </fragment>
     <fragment
         android:id="@+id/onboardingFragment"
-        android:name="com.example.analogunsplash.presentation.onboarding.OnboardingFragment"
+        android:name="com.example.analogunsplash.presentation.onboarding.OnboardFragment"
         android:label="fragment_onboarding"
         tools:layout="@layout/fragment_onboarding" />
     <fragment
         android:id="@+id/photoFragment"
-        android:name="com.example.analogunsplash.presentation.photo.PhotoFragment"
+        android:name="com.example.analogunsplash.presentation.ribbon.RibbonFragment"
         android:label="fragment_photo"
-        tools:layout="@layout/fragment_photo" />
+        tools:layout="@layout/fragment_ribborn" />
 
 </navigation>
