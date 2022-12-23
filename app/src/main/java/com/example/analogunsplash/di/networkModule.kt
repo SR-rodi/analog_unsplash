@@ -1,5 +1,6 @@
 package com.example.analogunsplash.di
 
+import com.example.analogunsplash.data.reposytory.TapeRemoteMediator
 import com.example.analogunsplash.domine.api.PhotoApi
 import com.example.analogunsplash.domine.api.TokenApi
 import com.example.analogunsplash.domine.tokeninterceptor.AuthInterceptor
@@ -31,10 +32,6 @@ val retrofitModule = module {
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-    }
-
-    single {
-        PhotoPagingSourceRepository(get())
     }
 
     single<TokenApi> {

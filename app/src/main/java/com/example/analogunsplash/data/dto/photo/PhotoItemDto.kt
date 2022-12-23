@@ -1,6 +1,7 @@
 package com.example.analogunsplash.data.dto.photo
 
-import com.example.analogunsplash.data.model.ItemInStrip
+import com.example.analogunsplash.data.bd.enity.TapeItemEntity
+import com.example.analogunsplash.data.model.TapeItem
 import com.google.gson.annotations.SerializedName
 
 class PhotoItemDto(
@@ -11,17 +12,38 @@ class PhotoItemDto(
     val urls: Urls,
     val width: Int,
     val height: Int,
+    @SerializedName("liked_by_user")
     val likedByUser: Boolean,
+    @SerializedName("twitter_username")
+    val twitterUsername: String?,
     val user: UserDto,
 ) {
-    fun toItemInStrip() =
-        ItemInStrip(
-            id,
-            urls.small,
-            width,
-            height,
-            likedByUser,
-            counterLikes,
-            user.toSmallUserInfo()
-        )
+    fun toTapeItem() = TapeItem(
+        id,
+        urls.small,
+        width,
+        height,
+        likedByUser,
+        counterLikes,
+        user.toSmallUserInfo(),
+        false,
+        twitterUsername
+    )
+
+    fun toTapeItemEntity() = TapeItemEntity(
+        id,
+        urls.small,
+        likedByUser,
+        counterLikes,
+        user.userName,
+        user.profileImage.small,
+        twitterUsername
+    )
+
+
+
 }
+
+class ProfileImage(
+    val small: String,
+)

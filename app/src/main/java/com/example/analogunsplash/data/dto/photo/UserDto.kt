@@ -12,6 +12,8 @@ class UserDto(
     val userName: String,
     val id: String,
     val name: String,
+    @SerializedName("profile_image")
+    val profileImage: ProfileImage,
 ){
-    fun toSmallUserInfo()=UserSmallInfo(firstName,lastName,userName,id)
+    fun toSmallUserInfo()=UserSmallInfo(firstName,profileImage.small)
 }

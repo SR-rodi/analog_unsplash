@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import com.example.analogUnsplash.databinding.ItemPhotoBinding
 import com.example.analogunsplash.data.diff.DiffPhoto
-import com.example.analogunsplash.data.model.ItemInStrip
+import com.example.analogunsplash.data.model.TapeItem
 
 
 class PagingPhotoAdapter(
-    private val onClick:(itemInStrip: ItemInStrip)->Unit
-): PagingDataAdapter<ItemInStrip, PhotoViewHolder>(DiffPhoto()) {
+    private val onClick:(itemInStrip: TapeItem)->Unit
+): PagingDataAdapter<TapeItem, PhotoViewHolder>(DiffPhoto()) {
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
         getItem(position)?.let { item-> holder.bind(item){ onClick(it)} }

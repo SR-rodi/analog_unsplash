@@ -1,33 +1,36 @@
 package com.example.analogunsplash.domine.repository.pagingsours
 
-import android.util.Log
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.map
-import com.example.analogunsplash.data.model.ItemInStrip
+import androidx.paging.*
+import com.example.analogunsplash.data.bd.enity.TapeItemEntity
+import com.example.analogunsplash.data.model.TapeItem
+import com.example.analogunsplash.data.reposytory.TapeDbRepository
+import com.example.analogunsplash.data.reposytory.TapeRemoteMediator
 import com.example.analogunsplash.domine.repository.PhotoRepository
-import com.example.analogunsplash.presentation.ribbon.LocaleChange
-import com.example.analogunsplash.presentation.ribbon.OnChange
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 
 class PhotoPagingSourceRepository(
     private val repository: PhotoRepository,
+    private val databaseRepository: TapeDbRepository
 ) {
-    fun getFlowPhoto(): Flow<PagingData<ItemInStrip>> {
+
+    @OptIn(ExperimentalPagingApi::class)
+    fun getFlowPhoto(): Flow<PagingData<TapeItem>> {
        return Pager(
             config = PagingConfig(
                 pageSize = 10,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = { PhotoPagingSours(repository) }
-        ).flow
+           remoteMediator = TapeRemoteMediator(databaseRepository,repository),
+            pagingSourceFactory = { databaseRepository.getPagingData() }
+        ).flow.map {
+            it.map {
+                it.toTapeItem()
+            }
+       }
+        }
 
+    suspend fun setLick(id: String) = repository.setLick(id)
+
+    suspend fun deleteLick(id: String) = repository.deleteLick(id)
     }
-
-   suspend fun setLick(id:String) = repository.setLick(id).toItemInStrip()
-
-    fun deleteLick(){}
-}

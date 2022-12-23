@@ -5,10 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.flatMap
 import androidx.paging.map
 import com.example.analogUnsplash.databinding.FragmentRibbornBinding
-import com.example.analogunsplash.data.model.ItemInStrip
+import com.example.analogunsplash.data.model.TapeItem
 import com.example.analogunsplash.presentation.ribbon.adapter.PagingPhotoAdapter
 import com.example.analogunsplash.tools.baseModel.BaseFragment
 import kotlinx.coroutines.launch
@@ -21,7 +20,7 @@ class RibbonFragment : BaseFragment<FragmentRibbornBinding>() {
 
     private val adapter by lazy { PagingPhotoAdapter(){onClick(it)} }
 
-    private fun onClick(itemInStrip: ItemInStrip) {
+    private fun onClick(itemInStrip: TapeItem) {
         viewModel.setLick(itemInStrip)
     }
 
@@ -37,6 +36,7 @@ class RibbonFragment : BaseFragment<FragmentRibbornBinding>() {
     private fun observe() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.items.collect {
+                Log.d("Kart",it.toString())
                 adapter.submitData(it)
             }
         }

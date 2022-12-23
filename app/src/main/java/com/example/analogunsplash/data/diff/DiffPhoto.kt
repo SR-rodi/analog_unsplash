@@ -1,14 +1,13 @@
 package com.example.analogunsplash.data.diff
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.analogunsplash.data.dto.photo.PhotoItemDto
-import com.example.analogunsplash.data.model.ItemInStrip
+import com.example.analogunsplash.data.model.TapeItem
 
-class DiffPhoto : DiffUtil.ItemCallback<ItemInStrip>() {
+class DiffPhoto : DiffUtil.ItemCallback<TapeItem>() {
 
-    override fun areItemsTheSame(oldItem: ItemInStrip, newItem: ItemInStrip) =
+    override fun areItemsTheSame(oldItem: TapeItem, newItem: TapeItem) =
         oldItem.photoId == newItem.photoId
 
-    override fun areContentsTheSame(oldItem: ItemInStrip, newItem: ItemInStrip) =
+    override fun areContentsTheSame(oldItem: TapeItem, newItem: TapeItem) =
         oldItem == newItem
 }
