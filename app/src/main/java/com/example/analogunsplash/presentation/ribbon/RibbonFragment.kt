@@ -32,6 +32,7 @@ class RibbonFragment : BaseFragment<FragmentRibbornBinding>() {
 
         observe()
         binding.recyclerView.adapter = adapter
+        binding.recyclerView.itemAnimator?.changeDuration = 0
     }
 
     private fun observe() {

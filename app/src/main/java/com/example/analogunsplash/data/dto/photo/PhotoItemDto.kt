@@ -8,7 +8,7 @@ class PhotoItemDto(
     val id: String,
     val alt_description: String,
     val blur_hash: String,
-    val urls: Urls,
+    val urls: Urls?,
     val width: Int,
     val height: Int,
     val likedByUser: Boolean,
@@ -16,8 +16,8 @@ class PhotoItemDto(
 ) {
     fun toItemInStrip() =
         ItemInStrip(
-            id,
-            urls.small,
+            id?:"",
+            urls?.small?:"",
             width,
             height,
             likedByUser,

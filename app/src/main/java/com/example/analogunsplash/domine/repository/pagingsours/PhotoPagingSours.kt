@@ -30,8 +30,8 @@ class PhotoPagingSours(
                 LoadResult.Page(
                     data = photoList,
                     prevKey = if (page == 1) null else page - 1,
-                    nextKey = if (photoList.isEmpty()) null else page + 1
-                    //nextKey = null // экономим запросы
+                   // nextKey = if (photoList.isEmpty()) null else page + 1
+                    nextKey = null // экономим запросы
                 )
             },
             onFailure = { LoadResult.Error(it) }

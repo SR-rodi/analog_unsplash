@@ -29,5 +29,5 @@ class PhotoPagingSourceRepository(
 
    suspend fun setLick(id:String) = repository.setLick(id).toItemInStrip()
 
-    fun deleteLick(){}
+   suspend fun deleteLick(id: String)=repository.deleteLick(id).toItemInStrip()
 }
