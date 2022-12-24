@@ -1,15 +1,16 @@
 package com.example.analogunsplash.presentation.ribbon
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.example.analogunsplash.data.model.TapeItem
+import com.example.analogunsplash.data.state.LocaleChange
+import com.example.analogunsplash.data.state.OnChange
 import com.example.analogunsplash.domine.repository.pagingsours.PhotoPagingSourceRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 class RibbonViewModel(
@@ -21,25 +22,24 @@ class RibbonViewModel(
 
     var items = photoRepository.getFlowPhoto()
         .cachedIn(viewModelScope)
-        .combine(localeChangeFlow, transform = this::merge)
+        .combine(localeChangeFlow, this::merge)
         .cachedIn(viewModelScope)
 
     fun setLick(item: TapeItem) {
-        setFlag(item)
+        viewModelScope.launch {
+            val newItem = if (item.likedByUser) photoRepository.setLick(item.photoId).photo
+            else photoRepository.deleteLick(item.photoId).photo
+            setFlag(newItem.toTapeItem())
+        }
+
     }
 
-    private fun setFlag(item: TapeItem) {
+    private suspend fun setFlag(newItem: TapeItem) {
 
-        viewModelScope.launch(Dispatchers.IO) {
-            Log.e("Kart", item.photoId)
-                val newItem = if (item.likedByUser) photoRepository.setLick(item.photoId)
-                else photoRepository.deleteLick(item.photoId)
-
-            val newFlag = !item.likedByUser
-            localChange.isFavorite[item.photoId] = newFlag
+            val newFlag = newItem.likedByUser
+            localChange.isFavorite[newItem.photoId] = newFlag
             localeChangeFlow.emit(OnChange(localChange))
 
-        }
     }
 
     private fun merge(
@@ -51,13 +51,4 @@ class RibbonViewModel(
         else item
         newItem
     }
-
-}
-
-
-class OnChange<T>(val value: T)
-
-class LocaleChange {
-    var isFavorite = mutableMapOf<String, Boolean>()
-    var isProgress = mutableSetOf<Boolean>()
 }
