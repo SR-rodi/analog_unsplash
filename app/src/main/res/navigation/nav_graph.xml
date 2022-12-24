@@ -28,6 +28,19 @@
         android:id="@+id/photoFragment"
         android:name="com.example.analogunsplash.presentation.ribbon.RibbonFragment"
         android:label="fragment_photo"
-        tools:layout="@layout/fragment_ribborn" />
+        tools:layout="@layout/fragment_ribborn" >
+        <action
+            android:id="@+id/action_photoFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.analogunsplash.presentation.detail.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

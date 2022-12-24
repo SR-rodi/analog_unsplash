@@ -1,16 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.analogunsplash.presentation.ribbon.RibbonFragment">
+
+
+    <Button
+        android:id="@+id/refresh_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:text="refresh"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="?attr/actionBarSize"
         app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-        app:spanCount="2" />
+        app:spanCount="2"
+        android:clipToPadding="true"
+        tools:listitem="@layout/item_photo" />
+
+    <FrameLayout
+        android:visibility="invisible"
+        android:id="@+id/error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="45dp"
+        android:paddingVertical="5dp"
+        android:layout_gravity="bottom"
+        android:background="@color/black_100">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Проверьте состояние сети"
+            android:layout_gravity="center_vertical"
+            android:textColor="#F63F3F" />
+
+        <ImageView
+            android:layout_gravity="end|center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_wifi_off"
+            app:tint="@color/error_text" />
+    </FrameLayout>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/green"
+            app:title="Лента"
+            app:menu="@menu/search_menu"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
 
 </FrameLayout>

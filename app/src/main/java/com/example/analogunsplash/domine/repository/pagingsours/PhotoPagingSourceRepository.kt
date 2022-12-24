@@ -15,17 +15,17 @@ class PhotoPagingSourceRepository(
 ) {
 
     @OptIn(ExperimentalPagingApi::class)
-    fun getFlowPhoto(): Flow<PagingData<TapeItem>> {
+    fun getFlowPhoto(query:String): Flow<PagingData<TapeItem>> {
        return Pager(
             config = PagingConfig(
                 pageSize = 10,
                 enablePlaceholders = false
             ),
-           remoteMediator = TapeRemoteMediator(databaseRepository,repository),
+           remoteMediator = TapeRemoteMediator(databaseRepository,repository,query),
             pagingSourceFactory = { databaseRepository.getPagingData() }
         ).flow.map {
-            it.map {
-                it.toTapeItem()
+            it.map {entity->
+                entity.toTapeItem()
             }
        }
         }
@@ -33,4 +33,6 @@ class PhotoPagingSourceRepository(
     suspend fun setLick(id: String) = repository.setLick(id)
 
     suspend fun deleteLick(id: String) = repository.deleteLick(id)
+
+    suspend fun updateLikeDB(entity: TapeItemEntity) = databaseRepository.setLickInDataBase(entity)
     }

@@ -1,11 +1,9 @@
 package com.example.analogunsplash.di
 
-import com.example.analogunsplash.data.reposytory.TapeRemoteMediator
 import com.example.analogunsplash.domine.api.PhotoApi
 import com.example.analogunsplash.domine.api.TokenApi
 import com.example.analogunsplash.domine.tokeninterceptor.AuthInterceptor
 import com.example.analogunsplash.domine.tokeninterceptor.AuthTokenProvider
-import com.example.analogunsplash.domine.repository.pagingsours.PhotoPagingSourceRepository
 import com.example.analogunsplash.tools.BASE_URL
 import okhttp3.OkHttpClient
 import org.koin.core.qualifier.named

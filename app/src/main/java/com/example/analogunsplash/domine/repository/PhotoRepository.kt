@@ -11,4 +11,6 @@ interface PhotoRepository {
     suspend fun setLick(id:String): WrapperPhotoDto
 
     suspend fun deleteLick(id: String):WrapperPhotoDto
+
+    suspend fun searchPhoto(query:String,page: Int):ResponsePhotoDto
 }

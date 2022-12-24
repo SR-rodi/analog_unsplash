@@ -83,5 +83,4 @@ class AuthorizationFragment : BaseFragment<FragmentAuthorizationBinding>() {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(LINK_INTENT)))
         }
     }
-
 }

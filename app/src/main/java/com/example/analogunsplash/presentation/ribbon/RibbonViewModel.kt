@@ -1,54 +1,45 @@
 package com.example.analogunsplash.presentation.ribbon
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.map
 import com.example.analogunsplash.data.model.TapeItem
-import com.example.analogunsplash.data.state.LocaleChange
-import com.example.analogunsplash.data.state.OnChange
 import com.example.analogunsplash.domine.repository.pagingsours.PhotoPagingSourceRepository
+import com.example.analogunsplash.tools.baseModel.BaseViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
 class RibbonViewModel(
-    private val photoRepository: PhotoPagingSourceRepository
-) : ViewModel() {
+    private val photoRepository: PhotoPagingSourceRepository,
+) : BaseViewModel() {
 
-    private val localChange = LocaleChange()
-    private val localeChangeFlow = MutableStateFlow(OnChange(localChange))
+    private val query = MutableStateFlow("")
 
-    var items = photoRepository.getFlowPhoto()
-        .cachedIn(viewModelScope)
-        .combine(localeChangeFlow, this::merge)
+    fun getItems() = photoRepository.getFlowPhoto("")
+
+    @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
+    fun test() = query.asStateFlow()
+        .debounce(500)
+        .flatMapLatest {
+        photoRepository.getFlowPhoto(it)}
         .cachedIn(viewModelScope)
 
     fun setLick(item: TapeItem) {
-        viewModelScope.launch {
-            val newItem = if (item.likedByUser) photoRepository.setLick(item.photoId).photo
-            else photoRepository.deleteLick(item.photoId).photo
-            setFlag(newItem.toTapeItem())
+        viewModelScope.launch(Dispatchers.IO + handler) {
+            val response = if (item.likedByUser) photoRepository.deleteLick(item.photoId).photo
+            else photoRepository.setLick(item.photoId).photo
+            val newItem = item.copy(likedByUser = response.likedByUser, counterLikes = response.counterLikes)
+            photoRepository.updateLikeDB(newItem.toTapeItemEntity())
         }
 
     }
 
-    private suspend fun setFlag(newItem: TapeItem) {
-
-            val newFlag = newItem.likedByUser
-            localChange.isFavorite[newItem.photoId] = newFlag
-            localeChangeFlow.emit(OnChange(localChange))
-
-    }
-
-    private fun merge(
-        photo: PagingData<TapeItem>,
-        localeChange: OnChange<LocaleChange>
-    ) = photo.map { item ->
-        val localFavorite = localeChange.value.isFavorite[item.photoId]
-        val newItem = if (localFavorite != null) item.copy(likedByUser = localFavorite)
-        else item
-        newItem
+    fun setQuery(newText: String, function: () -> Unit) {
+        query.value = newText
     }
 }
