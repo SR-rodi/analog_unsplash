@@ -16,6 +16,8 @@ interface TapeDbRepository {
 
     suspend fun clear()
 
+    suspend fun setLickInDataBase(itemEntity: TapeItemEntity)
+
     suspend fun refresh(data: List<TapeItemEntity>)
 
 }

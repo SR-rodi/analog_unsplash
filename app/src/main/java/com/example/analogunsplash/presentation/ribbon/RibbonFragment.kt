@@ -36,8 +36,7 @@ class RibbonFragment : BaseFragment<FragmentRibbornBinding>() {
 
     private fun observe() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.items.collect {
-                Log.d("Kart",it.toString())
+            viewModel.getItems().collect {
                 adapter.submitData(it)
             }
         }

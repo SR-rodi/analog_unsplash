@@ -38,7 +38,6 @@ class AuthorizationViewModel(
                     _loadState.emit(LoadState.ERROR.apply { message = t.message.toString() })
                     PLUG
                 }
-
                     _token.emit(accessToken)
                     _loadState.emit(LoadState.SUCCESS)
 

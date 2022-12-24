@@ -2,6 +2,7 @@ package com.example.analogunsplash.tools
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.analogUnsplash.R
 import com.example.analogunsplash.data.dto.photo.PhotoItemDto
 import com.example.analogunsplash.data.model.TapeItem
@@ -19,6 +20,7 @@ fun ImageView.loadImage(urls:String){
     Glide.with(this)
         .load(urls)
         .error(R.drawable.arcane_image)
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
         .placeholder(R.drawable.placeholder)
         .into(this)
 }

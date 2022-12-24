@@ -26,7 +26,7 @@ class TapeRemoteMediator(
             val response = networkRepository.getPopularPhoto(pageIndex).toListEntity()
             if (loadType == LoadType.REFRESH) database.refresh(response)
             else database.insertData(response)
-            MediatorResult.Success(endOfPaginationReached = true)
+            MediatorResult.Success(endOfPaginationReached = response.isEmpty())
         } catch (e: Exception) {
             MediatorResult.Error(e)
         }

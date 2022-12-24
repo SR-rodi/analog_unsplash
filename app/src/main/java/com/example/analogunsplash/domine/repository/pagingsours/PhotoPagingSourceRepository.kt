@@ -24,8 +24,8 @@ class PhotoPagingSourceRepository(
            remoteMediator = TapeRemoteMediator(databaseRepository,repository),
             pagingSourceFactory = { databaseRepository.getPagingData() }
         ).flow.map {
-            it.map {
-                it.toTapeItem()
+            it.map {entity->
+                entity.toTapeItem()
             }
        }
         }
@@ -33,4 +33,6 @@ class PhotoPagingSourceRepository(
     suspend fun setLick(id: String) = repository.setLick(id)
 
     suspend fun deleteLick(id: String) = repository.deleteLick(id)
+
+    suspend fun updateLikeDB(entity: TapeItemEntity) = databaseRepository.setLickInDataBase(entity)
     }

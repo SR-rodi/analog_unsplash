@@ -16,6 +16,9 @@ interface TapeItemDao {
     @Query("DELETE FROM tape_item")
     suspend fun clear()
 
+    @Update()
+    suspend fun setLickInDb(itemEntity: TapeItemEntity)
+
     @Transaction
     suspend fun refresh(data: List<TapeItemEntity>){
         clear()

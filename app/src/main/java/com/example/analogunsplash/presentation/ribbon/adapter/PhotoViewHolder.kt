@@ -19,9 +19,6 @@ class PhotoViewHolder(private val binding: ItemPhotoBinding) :
         binding.counterLick.text = item.counterLikes.toString()
         binding.favorite.isActivated = item.likedByUser
 
-/*        val ratio = min(item.height, item.width) / max(item.height, item.width)
-        binding.cardView.layoutParams.height = binding.image.layoutParams.width * ratio*/
-
         binding.image.loadImage(item.smallUrls)
         binding.avatar.loadImage(item.userInfo.profileImage)
 
