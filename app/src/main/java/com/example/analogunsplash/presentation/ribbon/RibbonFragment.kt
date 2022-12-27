@@ -20,7 +20,7 @@ class RibbonFragment : BaseFragment<FragmentRibbornBinding>() {
 
     private val viewModel by viewModel<RibbonViewModel>()
 
-    private val adapter by lazy { PagingPhotoAdapter() { item, button -> onClick(item, button) } }
+    private val adapter by lazy { PagingPhotoAdapter { item, button -> onClick(item, button) } }
 
     override fun initBinding(inflater: LayoutInflater) = FragmentRibbornBinding.inflate(inflater)
 
