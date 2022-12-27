@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:orientation="horizontal"
+        android:id="@+id/description"
         android:paddingHorizontal="5dp"
         android:background="#7E000000">
 
@@ -65,7 +66,6 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-
             android:layout_weight="1" />
 
         <ProgressBar

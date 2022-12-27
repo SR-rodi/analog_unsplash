@@ -4,16 +4,16 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.analogUnsplash.databinding.ItemPhotoBinding
 import com.example.analogunsplash.data.model.TapeItem
+import com.example.analogunsplash.data.state.ItemButton
 import com.example.analogunsplash.tools.loadImage
-import java.lang.Integer.max
-import java.lang.Integer.min
 
 class PhotoViewHolder(private val binding: ItemPhotoBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: TapeItem, onClick: (item: TapeItem) -> Unit) {
+    fun bind(item: TapeItem, onClick: (item: TapeItem,button:ItemButton) -> Unit) {
 
-        binding.image.setOnClickListener { onClick(item) }
+        binding.image.setOnClickListener { onClick(item,ItemButton.IMAGE) }
+        binding.description.setOnClickListener { onClick(item,ItemButton.LICK) }
 
         binding.progressBar.isVisible = item.isLikeProgress
         binding.counterLick.text = item.counterLikes.toString()

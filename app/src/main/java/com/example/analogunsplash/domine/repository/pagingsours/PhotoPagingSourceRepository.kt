@@ -34,5 +34,7 @@ class PhotoPagingSourceRepository(
 
     suspend fun deleteLick(id: String) = repository.deleteLick(id)
 
+    suspend fun testQuery(id: String) = repository.searchPhoto(id,1)
+
     suspend fun updateLikeDB(entity: TapeItemEntity) = databaseRepository.setLickInDataBase(entity)
     }

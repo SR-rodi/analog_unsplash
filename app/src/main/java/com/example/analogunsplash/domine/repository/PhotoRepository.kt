@@ -3,6 +3,7 @@ package com.example.analogunsplash.domine.repository
 import com.example.analogunsplash.data.dto.photo.PhotoItemDto
 import com.example.analogunsplash.data.dto.photo.ResponsePhotoDto
 import com.example.analogunsplash.data.dto.photo.WrapperPhotoDto
+import com.example.analogunsplash.data.dto.search.SearchDto
 
 interface PhotoRepository {
 
@@ -12,5 +13,5 @@ interface PhotoRepository {
 
     suspend fun deleteLick(id: String):WrapperPhotoDto
 
-    suspend fun searchPhoto(query:String,page: Int):ResponsePhotoDto
+    suspend fun searchPhoto(query:String,page: Int):SearchDto
 }

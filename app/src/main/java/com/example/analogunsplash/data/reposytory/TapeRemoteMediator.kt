@@ -1,12 +1,11 @@
 package com.example.analogunsplash.data.reposytory
 
 import android.util.Log
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.LoadType
-import androidx.paging.PagingState
-import androidx.paging.RemoteMediator
+import androidx.paging.*
 import com.example.analogunsplash.data.bd.enity.TapeItemEntity
 import com.example.analogunsplash.domine.repository.PhotoRepository
+import com.example.analogunsplash.tools.toListTapeItem
+import com.example.analogunsplash.tools.toListTapeItemEntity
 
 @OptIn(ExperimentalPagingApi::class)
 class TapeRemoteMediator(
@@ -21,27 +20,31 @@ class TapeRemoteMediator(
         return InitializeAction.SKIP_INITIAL_REFRESH
     }
 
+
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, TapeItemEntity>,
     ): MediatorResult {
-        var isSearch = false
 
+        Log.e("Kart","Start ${loadType.name}")
 
         pageIndex = getIndex(loadType) ?: return MediatorResult.Success(true)
 
         return try {
-            val response = if (query=="") networkRepository.getPopularPhoto(pageIndex).toListEntity()
-            else {
-                isSearch = true
-                networkRepository.searchPhoto(query, pageIndex).toListEntity()
-            }
-            if (loadType == LoadType.REFRESH) {
-                database.refresh(response)
+            val response = if (query==""){
+                Log.e("Kart","Start popular")
+                networkRepository.getPopularPhoto(pageIndex).toListEntity()
             }
             else {
-                database.insertData(response)
+                Log.e("Kart","Start query")
+                networkRepository.searchPhoto(query, pageIndex).results.toListTapeItemEntity()
             }
+            if (loadType == LoadType.REFRESH){
+                database.clear()
+            }
+
+            else database.insertData(response)
+
 
 
             MediatorResult.Success(endOfPaginationReached = response.isEmpty())
